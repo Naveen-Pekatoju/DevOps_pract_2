@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "calculator-app"
-        DOCKERHUB_USER = "pranaymedipally"
+        DOCKERHUB_USER = "naveenpekatoju"
     }
 
     stages {
