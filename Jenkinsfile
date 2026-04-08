@@ -11,32 +11,32 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh "npm install"
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh '''
+                sh """
                 docker build -t reg-app:${BUILD_NUMBER} .
                 docker tag reg-app:${BUILD_NUMBER} ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                '''
+                """
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}'
+                sh "docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
         stage('Run Container') {
             steps {
-                sh '''
+                sh """
                 docker stop calculator-container || true
                 docker rm calculator-container || true
                 docker run -d -p 3000:3000 --name calculator-container ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                '''
+                """
             }
         }
     }
