@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "calculator-app"
-        DOCKERHUB_USER = "naveenpekatoju"
+        
+        IMAGE_NAME = "naveenpekatoju/calculator"
         IMAGE_TAG = "latest"
     }
 
@@ -19,14 +19,14 @@ pipeline {
             steps {
                 sh """
                 docker build -t calculator-app:${BUILD_NUMBER} .
-                docker tag calculator-app:${BUILD_NUMBER} ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                docker tag calculator-app:${BUILD_NUMBER} $IMAGE_NAME:$IMAGE_TAG
                 """
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh "docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "docker push $IMAGE_NAME:$IMAGE_TAG"
             }
         }
 
@@ -35,7 +35,7 @@ pipeline {
                 sh """
                 docker stop calculator-container || true
                 docker rm calculator-container || true
-                docker run -d -p 3000:3000 --name calculator-container ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                docker run -d -p 3000:3000 --name calculator-container ${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
