@@ -18,8 +18,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """
-                docker build -t reg-app:${BUILD_NUMBER} .
-                docker tag reg-app:${BUILD_NUMBER} ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                docker build -t calculator-app:${BUILD_NUMBER} .
+                docker tag calculator-app:${BUILD_NUMBER} ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
