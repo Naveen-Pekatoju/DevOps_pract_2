@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "calculator-app"
         DOCKERHUB_USER = "naveenpekatoju"
+        IMAGE_TAG = "latest"
     }
 
     stages {
