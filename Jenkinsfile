@@ -10,11 +10,25 @@ pipeline {
 
         
 
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${DOCKERHUB_USER}/${IMAGE_NAME}")
-                }
+                sh '''
+                docker build -t reg-app:${BUILD_NUMBER} .
+                docker tag reg-app:${BUILD_NUMBER} $IMAGE_NAME:$IMAGE_TAG
+                '''
+            }
+        }
+
+
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker push $IMAGE_NAME:$IMAGE_TAG'
             }
         }
 
