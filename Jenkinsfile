@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        
         IMAGE_NAME = "naveenpekatoju/calculator"
         IMAGE_TAG = "latest"
     }
@@ -19,14 +18,14 @@ pipeline {
             steps {
                 sh """
                 docker build -t calculator-app:${BUILD_NUMBER} .
-                docker tag calculator-app:${BUILD_NUMBER} $IMAGE_NAME:$IMAGE_TAG
+                docker tag calculator-app:${BUILD_NUMBER} ${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh "docker push $IMAGE_NAME:$IMAGE_TAG"
+                sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
